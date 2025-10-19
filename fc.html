@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title></title>
+<style>
+  
+
+  body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(rgba(255,200,180,0.7), rgba(255,150,220,0.7)),
+                url('https://via.placeholder.com/1200x800?text=Food+Background') no-repeat center center fixed;
+    background-size: cover;
+    color: #fff;
+    background-image: url('dishes.jpg');
+      
+    
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-color: whitesmoke;
+    margin: 0;
+    height: 100vh;
+  }
+
+  header {
+    text-align: center;
+    padding: 50px 20px 20px 20px;
+    text-shadow: 2px 2px 6px rgba(0,0,0,0.5);
+  }
+  header h1 { margin: 0; font-size: 3em; color:black; }
+  header p { margin: 10px 0 0 0; font-size: 1.2em; }
+
+  .category-buttons {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin: 30px 0;
+    gap: 15px;
+  }
+  .category-buttons button {
+    padding: 12px 20px;
+    font-size: 1em;
+    border: none;
+    border-radius: 10px;
+    background: #ff7f50;
+    color: white;
+    cursor: pointer;
+    transition: transform 0.2s, background 0.3s;
+  }
+  .category-buttons button:hover {
+    background: #ff4500;
+    transform: scale(1.05);
+  }
+
+  .menu-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 25px;
+    padding: 20px;
+    max-width: 1200px;
+    margin: auto;
+  }
+
+  .dish-card {
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 15px;
+    overflow: hidden;
+    text-align: center;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+    cursor: pointer;
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  .dish-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+  }
+
+  .dish-card img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+  }
+
+  .dish-card h3 {
+    margin: 10px 0 5px 0;
+    color: #333;
+  }
+
+  .dish-card .rating {
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #ffb400;
+  }
+
+  .details {
+    display: none;
+    padding: 10px;
+    text-align: left;
+    font-size: 0.9em;
+    color: #333;
+  }
+  .details p { margin: 4px 0; }
+  .details a {
+    color: #ff4500;
+    text-decoration: none;
+    font-weight: bold;
+  }
+  .details p{margin:4px 0;}
+.details a{color:#ff4500;text-decoration:none;font-weight:bold;}
+.details a:hover{text-decoration:underline;}
+/* ====== CENTERED & STYLISH SEARCH BAR ====== */
+.search-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 40px auto;
+  position: relative;
+  width: 100%;
+}
+
+.search-container input {
+  width: 60%;
+  max-width: 600px;
+  padding: 14px 55px 14px 20px;
+  border: none;
+  border-radius: 40px;
+  font-size: 1.1em;
+  outline: none;
+  color: #333;
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+  transition: all 0.3s ease;
+  backdrop-filter: blur(8px);
+}
+
+.search-container input::placeholder {
+  color: #888;
+  font-style: italic;
+}
+
+.search-container input:focus {
+  box-shadow: 0 0 20px rgba(255, 127, 80, 0.6);
+  transform: scale(1.03);
+}
+
+.search-container button {
+  position: absolute;
+  right: 20%;
+  background: linear-gradient(135deg, #ff7f50, #ff4500);
+  border: none;
+  color: white;
+  padding: 12px 15px;
+  border-radius: 50%;
+  font-size: 1.1em;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+}
+
+.search-container button:hover {
+  transform: scale(1.15);
+  box-shadow: 0 0 15px rgba(255, 69, 0, 0.8);
+}
+/* ===== Category-specific section colors ===== */
+.category-section.breakfast {
+  min-height: 400px;                             /* ensures section grows with content */
+  padding: 20px 0;                               /* adds space inside section */
+  border-left: 8px solid #FFD700;               /* golden border */
+  background-color: rgba(255, 245, 200, 0.4);   /* light yellow overlay */
+  background-image: url('meal.jpg');            /* your image */
+  background-size: cover;                        /* make image cover section */
+  background-repeat: no-repeat;                  /* no tiling */
+  background-position: center;                   /* center the image */
+}
+.category-section.lunch {
+  min-height: 400px;                             /* grows with content */
+  padding: 20px 0;                               /* space inside */
+  border-left: 8px solid #FF4500;
+  background-color: rgba(255, 200, 200, 0.4);
+  background-image: url('lunch1.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.category-section.dinner {
+  min-height: 400px;
+  padding: 20px 0;
+  border-left: 8px solid #1E90FF;
+  background-color: rgba(200, 230, 255, 0.4);
+  background-image: url('dinner1.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.category-section.desserts {
+  min-height: 400px;
+  padding: 20px 0;
+  border-left: 8px solid #FF8C00;
+  background-color: rgba(255, 230, 200, 0.4);
+  background-image: url('dessert1.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+
+
+
+
+.category-section h2 {
+  text-align: center;
+  font-size: 2em;
+  padding: 10px;
+  margin-bottom: 15px;
+  border-radius: 10px;
+  color: #333;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+}
+
+
+</style>
+</head>
+<body>
+
+<header>
+<h1>🍽️ Welcome to food chatbot</h1>
+<p>Click a dish to see  ingredients,famous chef, ratings & youtube recipe video</p>
+</header>
+
+<div class="search-container">
+  <input type="text" id="search" placeholder="Search dishes or chefs..." oninput="filterList()" />
+  <button>🔍</button>
+</div>
+
+
+<div class="category-buttons">
+<button onclick="filterCategory('Breakfast')">Breakfast</button>
+<button onclick="filterCategory('Lunch')">Lunch</button>
+<button onclick="filterCategory('Dinner')">Dinner</button>
+<button onclick="filterCategory('Desserts')">Desserts</button>
+<button onclick="showAll()">All</button>
+</div>
+
+<div id="menuArea"></div>
+
+<script>
+const dishes=[
+  {name:"Pancakes",category:"Breakfast",rating:"⭐ 4.8",chef:"Chef Ricardo",ingredients:"Flour, Eggs, Milk, Sugar",recipe:"Mix and cook on griddle",image:"pancakes.jpg",video:"https://youtu.be/zVvAyAVq9L0"},
+  {name:"Omelette",category:"Breakfast",rating:"⭐ 4.7",chef:"Chef  maestro José Andrés",ingredients:"Eggs, Onion, Tomato, Salt",recipe:"Beat eggs, cook with fillings",image:"omelette.jpg",video:"https://youtu.be/zVvAyAVq9L0"},
+  {name:"Idli Sambar",category:"Breakfast",rating:"⭐ 4.9",chef:"Chef Rakesh Ragunath",ingredients:"Rice, Lentils, Vegetables, Spices",recipe:"Steam idli, serve with sambar",image:"idli.jpg",video:"https://youtu.be/nIoIzarlQ1k"},
+  
+{name:"Poha",category:"Breakfast",rating:"⭐ 4.8",chef:"Chef Rakesh Ragunath",ingredients:"Flattened Rice, Onion, Spices, Peanuts",recipe:"Cook poha with spices and garnish",image:"poha.jpg",video:"https://youtu.be/example1"},
+{name:"Upma",category:"Breakfast",rating:"⭐ 4.7",chef:"Chef Sanjyot Keer",ingredients:"Semolina, Onion, Vegetables, Spices",recipe:"Cook semolina with spices and vegetables",image:"upma.jpg",video:"https://youtu.be/example2"},
+{name:"Dhokla",category:"Breakfast",rating:"⭐ 4.6",chef:"Chef Sanjyot Keer",ingredients:"Gram Flour, Yogurt, Spices",recipe:"Steam batter to make fluffy dhokla",image:"dhokla.jpg",video:"https://youtu.be/example3"},
+{name:"Masala Chai",category:"Breakfast",rating:"⭐ 4.7",chef:"Chef Rakesh Ragunath",ingredients:"Tea, Milk, Spices, Sugar",recipe:"Boil tea with milk and spices",image:"masala_chai.jpg",video:"https://youtu.be/example4"},
+{name:"Bread Pakora",category:"Breakfast",rating:"⭐ 4.6",chef:"Chef Sanjyot Keer",ingredients:"Bread, Potato, Spices, Oil",recipe:"Stuff bread with potato and deep fry",image:"bread_pakora.jpg",video:"https://youtu.be/example5"},
+{name:"Aloo Paratha",category:"Breakfast",rating:"⭐ 4.8",chef:"Chef Rakesh Ragunath",ingredients:"Wheat Flour, Potato, Spices, Butter",recipe:"Stuff dough with potato filling and cook on tawa",image:"aloo_paratha.jpg",video:"https://youtu.be/example6"},
+{name:"Chole Bhature",category:"Breakfast",rating:"⭐ 4.9",chef:"Chef Sanjyot Keer",ingredients:"Chickpeas, Flour, Spices, Oil",recipe:"Cook chickpeas and serve with fried bread",image:"chole_bhature.jpg",video:"https://youtu.be/example7"},
+{name:"French Toast",category:"Breakfast",rating:"⭐ 4.6",chef:"Chef Jamie Oliver",ingredients:"Bread, Eggs, Milk, Sugar, Cinnamon",recipe:"Dip bread in egg mixture and fry",image:"french_toast.jpg",video:"https://youtu.be/example8"},
+{name:"Dosa",category:"Breakfast",rating:"⭐ 4.8",chef:"Chef Rakesh Ragunath",ingredients:"Rice, Lentils, Oil",recipe:"Ferment batter and cook thin dosa on tawa",image:"dosa.jpg",video:"https://youtu.be/example9"},
+{name:"Idiyappam",category:"Breakfast",rating:"⭐ 4.7",chef:"Chef Sanjyot Keer",ingredients:"Rice Flour, Water, Coconut",recipe:"Steam rice flour noodles",image:"idiyappam.jpg",video:"https://youtu.be/example10"},
+{name:"Vegetable Sandwich",category:"Breakfast",rating:"⭐ 4.6",chef:"Chef Alice Waters",ingredients:"Bread, Vegetables, Cheese, Butter",recipe:"Assemble vegetables and grill sandwich",image:"veg_sandwich.jpg",video:"https://youtu.be/example11"},
+{name:"Sabudana Khichdi",category:"Breakfast",rating:"⭐ 4.7",chef:"Chef Sanjyot Keer",ingredients:"Tapioca, Peanuts, Spices",recipe:"Cook soaked sabudana with spices and peanuts",image:"sabudana_khichdi.jpg",video:"https://youtu.be/example12"},
+{name:"Paneer Stuffed Paratha",category:"Breakfast",rating:"⭐ 4.8",chef:"Chef Rakesh Ragunath",ingredients:"Wheat Flour, Paneer, Spices",recipe:"Stuff dough with paneer mixture and cook on tawa",image:"paneer_paratha.jpg",video:"https://youtu.be/example13"},
+{name:"Methi Thepla",category:"Breakfast",rating:"⭐ 4.6",chef:"Chef Sanjyot Keer",ingredients:"Wheat Flour, Fenugreek, Spices",recipe:"Cook flatbread with fenugreek and spices",image:"methi_thepla.jpg",video:"https://youtu.be/example14"},
+{name:"Cornflakes with Milk",category:"Breakfast",rating:"⭐ 4.5",chef:"Chef Martha Stewart",ingredients:"Cornflakes, Milk, Honey",recipe:"Pour milk over cornflakes and serve",image:"cornflakes.jpg",video:"https://youtu.be/example15"},
+{name:"Kesari Bath",category:"Breakfast",rating:"⭐ 4.7",chef:"Chef Rakesh Ragunath",ingredients:"Semolina, Sugar, Ghee, Saffron",recipe:"Cook semolina with ghee and sugar, add saffron",image:"kesari_bath.jpg",video:"https://youtu.be/example16"},
+{name:"Bread Omelette",category:"Breakfast",rating:"⭐ 4.8",chef:"Chef Sanjyot Keer",ingredients:"Bread, Eggs, Spices",recipe:"Cook omelette on bread with spices",image:"bread_omelette.jpg",video:"https://youtu.be/example17"},
+
+
+
+  {name:"Butter Chicken",category:"Lunch",rating:"⭐ 4.8",chef:"Chef Kunal Kapur",ingredients:"Chicken, Butter, Tomato, Cream, Spices",recipe:"Cook chicken in tomato butter gravy",image:"Butter-chicken.jpg",video:"https://youtu.be/a03U45jFxOI"},
+  {name:"Veg Biryani",category:"Lunch",rating:"⭐ 4.6",chef:"Chef Ajay chpra",ingredients:"Rice, Vegetables, Spices, Saffron",recipe:"Cook rice with veggies and spices",image:"veg biryani.jpg",video:"https://youtu.be/BusyvqHkc4o"},
+  {name:"Paneer Butter Masala",category:"Lunch",rating:"⭐ 4.9",chef:"Chef Harishji ",ingredients:"Paneer, Tomato, Butter, Cream, Spices",recipe:"Paneer in rich tomato butter sauce",image:"Paneer-Butter-Masala.jpg",video:"https://youtu.be/1BXWujphcxc"},
+
+{name:"Chole Masala",category:"Lunch",rating:"⭐ 4.8",chef:"Chef Sanjyot Keer",ingredients:"Chickpeas, Onion, Tomato, Spices",recipe:"Cook chickpeas in spicy tomato gravy",image:"chole_masala.jpg",video:"https://youtu.be/example1"},
+{name:"Rajma Masala",category:"Lunch",rating:"⭐ 4.7",chef:"Chef Sanjyot Keer",ingredients:"Kidney Beans, Onion, Tomato, Spices",recipe:"Cook kidney beans in rich masala",image:"rajma_masala.jpg",video:"https://youtu.be/example2"},
+{name:"Aloo Gobi",category:"Lunch",rating:"⭐ 4.6",chef:"Chef Rakesh Ragunath",ingredients:"Potato, Cauliflower, Spices",recipe:"Cook potatoes and cauliflower with spices",image:"aloo_gobi.jpg",video:"https://youtu.be/example3"},
+{name:"Palak Paneer",category:"Lunch",rating:"⭐ 4.8",chef:"Chef Harishji",ingredients:"Paneer, Spinach, Cream, Spices",recipe:"Cook paneer in creamy spinach gravy",image:"palak_paneer.jpg",video:"https://youtu.be/example4"},
+{name:"Masala Dosa",category:"Lunch",rating:"⭐ 4.7",chef:"Chef Rakesh Ragunath",ingredients:"Rice, Lentils, Potato Filling, Spices",recipe:"Serve crispy dosa with spiced potato filling",image:"masala_dosa.jpg",video:"https://youtu.be/example5"},
+{name:"Pav Bhaji",category:"Lunch",rating:"⭐ 4.8",chef:"Chef Sanjyot Keer",ingredients:"Vegetables, Butter, Spices, Bread",recipe:"Cook mashed veggies with spices, serve with bread",image:"pav_bhaji.jpg",video:"https://youtu.be/example6"},
+{name:"Dal Makhani",category:"Lunch",rating:"⭐ 4.9",chef:"Chef Sanjyot Keer",ingredients:"Black Lentils, Butter, Cream, Spices",recipe:"Cook lentils in rich creamy sauce",image:"dal_makhani.jpg",video:"https://youtu.be/example7"},
+{name:"Grilled Chicken Salad",category:"Lunch",rating:"⭐ 4.6",chef:"Chef Jamie Oliver",ingredients:"Chicken, Lettuce, Tomatoes, Dressing",recipe:"Grill chicken and toss with salad",image:"grilled_chicken_salad.jpg",video:"https://youtu.be/example8"},
+{name:"Pasta Primavera",category:"Lunch",rating:"⭐ 4.7",chef:"Chef Wolfgang Puck",ingredients:"Pasta, Vegetables, Olive Oil, Herbs",recipe:"Cook pasta and sauté vegetables",image:"pasta_primavera.jpg",video:"https://youtu.be/example9"},
+{name:"Tandoori Chicken",category:"Lunch",rating:"⭐ 4.8",chef:"Chef Ranveer Brar",ingredients:"Chicken, Yogurt, Spices",recipe:"Marinate chicken and bake/tandoor",image:"tandoori_chicken.jpg",video:"https://youtu.be/example10"},
+{name:"Vegetable Sandwich",category:"Lunch",rating:"⭐ 4.6",chef:"Chef Alice Waters",ingredients:"Bread, Vegetables, Cheese, Butter",recipe:"Assemble vegetables and grill sandwich",image:"veg_sandwich.jpg",video:"https://youtu.be/example11"},
+{name:"Fish Curry",category:"Lunch",rating:"⭐ 4.7",chef:"Chef Kunal Kapur",ingredients:"Fish, Coconut, Spices",recipe:"Cook fish in spicy coconut gravy",image:"fish_curry.jpg",video:"https://youtu.be/example12"},
+{name:"Egg Curry",category:"Lunch",rating:"⭐ 4.6",chef:"Chef Sanjyot Keer",ingredients:"Eggs, Onion, Tomato, Spices",recipe:"Cook boiled eggs in spicy curry",image:"egg_curry.jpg",video:"https://youtu.be/example13"},
+{name:"Veggie Burger",category:"Lunch",rating:"⭐ 4.7",chef:"Chef Alice Waters",ingredients:"Veggie Patty, Bun, Lettuce, Tomato",recipe:"Assemble patty and toppings in bun",image:"veggie_burger.jpg",video:"https://youtu.be/example14"},
+{name:"Chicken Fried Rice",category:"Lunch",rating:"⭐ 4.8",chef:"Chef Sanjyot Keer",ingredients:"Rice, Chicken, Vegetables, Soy Sauce",recipe:"Stir fry rice with chicken and veggies",image:"chicken_fried_rice.jpg",video:"https://youtu.be/example15"},
+{name:"Methi Malai Paneer",category:"Lunch",rating:"⭐ 4.6",chef:"Chef Rakesh Ragunath",ingredients:"Paneer, Fenugreek, Cream, Spices",recipe:"Cook paneer in creamy fenugreek sauce",image:"methi_malai_paneer.jpg",video:"https://youtu.be/example16"},
+{name:"Butter Naan & Curry",category:"Lunch",rating:"⭐ 4.9",chef:"Chef Sanjyot Keer",ingredients:"Naan, Choice of Curry",recipe:"Serve hot naan with rich curry",image:"butter_naan_curry.jpg",video:"https://youtu.be/example17"},
+
+
+
+
+  {name:"Grilled Salmon",category:"Dinner",rating:"⭐ 4.7",chef:"Chef Ali Gangurmous",ingredients:"Salmon, Olive Oil, Herbs",recipe:"Grill salmon with herbs",image:"grilled salmon.jpg",video:"https://youtu.be/BusyvqHkc4o"},
+  {name:"Mushroom Risotto",category:"Dinner",rating:"⭐ 4.8",chef:"Chef Lidia bastinchia",ingredients:"Rice, Mushroom, Cream, Parmesan",recipe:"Cook rice with mushrooms and cream",image:"mushroom-risotto.jpg",video:"https://youtu.be/3QN6fAV8osk"},
+  {name:"Roti & Dal",category:"Dinner",rating:"⭐ 4.9",chef:"Chef Asha",ingredients:"Wheat Roti, Lentils, Spices",recipe:"Serve roti with cooked lentils",image:"roti and dal.jpg",video:"https://youtu.be/3QN6fAV8osk"},
+
+{name:"Lamb Chops",category:"Dinner",rating:"⭐ 4.8",chef:"Chef Bobby Flay",ingredients:"Lamb, Herbs, Spices",recipe:"Grill lamb chops with seasoning",image:"lamb_chops.jpg",video:"https://youtu.be/example41"},
+{name:"Chicken Tikka Masala",category:"Dinner",rating:"⭐ 4.9",chef:"Chef Ranveer Brar",ingredients:"Chicken, Spices, Tomato, Cream",recipe:"Cook chicken in creamy spiced sauce",image:"chicken_tikka_masala.jpg",video:"https://youtu.be/example42"},
+{name:"Palak Paneer",category:"Dinner",rating:"⭐ 4.8",chef:"Chef Harishji",ingredients:"Paneer, Spinach, Cream, Spices",recipe:"Cook paneer in creamy spinach gravy",image:"palak_paneer_dinner.jpg",video:"https://youtu.be/example43"},
+{name:"Tandoori Chicken",category:"Dinner",rating:"⭐ 4.8",chef:"Chef Ranveer Brar",ingredients:"Chicken, Yogurt, Spices",recipe:"Marinate chicken and bake/tandoor",image:"tandoori_chicken.jpg",video:"https://youtu.be/example44"},
+{name:"Paneer Tikka",category:"Dinner",rating:"⭐ 4.7",chef:"Chef Rakesh Ragunath",ingredients:"Paneer, Yogurt, Spices",recipe:"Grill marinated paneer cubes",image:"paneer_tikka.jpg",video:"https://youtu.be/example45"},
+{name:"Fish Curry",category:"Dinner",rating:"⭐ 4.7",chef:"Chef Kunal Kapur",ingredients:"Fish, Coconut, Spices",recipe:"Cook fish in spicy coconut gravy",image:"fish_curry.jpg",video:"https://youtu.be/example46"},
+{name:"Methi Malai Paneer",category:"Dinner",rating:"⭐ 4.6",chef:"Chef Rakesh Ragunath",ingredients:"Paneer, Fenugreek, Cream, Spices",recipe:"Cook paneer in creamy fenugreek sauce",image:"methi_malai_paneer.jpg",video:"https://youtu.be/example47"},
+{name:"Chicken Fried Rice",category:"Dinner",rating:"⭐ 4.8",chef:"Chef Sanjyot Keer",ingredients:"Rice, Chicken, Vegetables, Soy Sauce",recipe:"Stir fry rice with chicken and veggies",image:"chicken_fried_rice.jpg",video:"https://youtu.be/example48"},
+{name:"Veggie Lasagna",category:"Dinner",rating:"⭐ 4.7",chef:"Chef Alice Waters",ingredients:"Pasta Sheets, Vegetables, Cheese, Sauce",recipe:"Layer pasta with veggies and cheese, bake",image:"veggie_lasagna.jpg",video:"https://youtu.be/example49"},
+{name:"Kadai Paneer",category:"Dinner",rating:"⭐ 4.8",chef:"Chef Sanjyot Keer",ingredients:"Paneer, Onion, Tomato, Spices",recipe:"Cook paneer in spicy kadai gravy",image:"kadai_paneer.jpg",video:"https://youtu.be/example50"},
+{name:"Bhindi Masala",category:"Dinner",rating:"⭐ 4.6",chef:"Chef Sanjyot Keer",ingredients:"Okra, Onion, Spices",recipe:"Cook okra with onion and spices",image:"bhindi_masala.jpg",video:"https://youtu.be/example51"},
+{name:"Dal Tadka",category:"Dinner",rating:"⭐ 4.8",chef:"Chef Rakesh Ragunath",ingredients:"Yellow Lentils, Spices, Ghee",recipe:"Cook lentils and temper with spices",image:"dal_tadka.jpg",video:"https://youtu.be/example52"},
+{name:"Pasta Alfredo",category:"Dinner",rating:"⭐ 4.7",chef:"Chef Wolfgang Puck",ingredients:"Pasta, Cream, Butter, Parmesan",recipe:"Cook pasta in creamy Alfredo sauce",image:"pasta_alfredo.jpg",video:"https://youtu.be/example53"},
+{name:"Butter Naan & Curry",category:"Dinner",rating:"⭐ 4.9",chef:"Chef Sanjyot Keer",ingredients:"Naan, Choice of Curry",recipe:"Serve hot naan with rich curry",image:"butter_naan_curry.jpg",video:"https://youtu.be/example54"},
+{name:"Grilled Vegetable Medley",category:"Dinner",rating:"⭐ 4.6",chef:"Chef Alice Waters",ingredients:"Mixed Vegetables, Olive Oil, Herbs",recipe:"Roast vegetables until tender",image:"grilled_veggies.jpg",video:"https://youtu.be/example55"},
+{name:"Paneer Do Pyaza",category:"Dinner",rating:"⭐ 4.7",chef:"Chef Sanjyot Keer",ingredients:"Paneer, Onions, Spices",recipe:"Cook paneer with extra onions in spicy gravy",image:"paneer_do_piaza.jpg",video:"https://youtu.be/example56"},
+
+
+
+  {name:"Gulab Jamun",category:"Desserts",rating:"⭐ 4.9",chef:"Chef Sanjyot keer",ingredients:"Milk, Flour, Sugar, Cardamom",recipe:"Deep fry milk dumplings in syrup",image:"gulab jamun.jpg",video:"https://youtu.be/QFvd7u_YjVk"},
+
+{name:"Chocolate Brownie",category:"Desserts",rating:"⭐ 4.8",chef:"Chef Gordon Ramsay",ingredients:"Chocolate, Butter, Eggs, Sugar, Flour",recipe:"Bake rich chocolate batter in oven",image:"chocolate_brownie.jpg",video:"https://youtu.be/example61"},
+{name:"Rasgulla",category:"Desserts",rating:"⭐ 4.7",chef:"Chef Rakesh Ragunath",ingredients:"Chhena, Sugar Syrup, Cardamom",recipe:"Boil chhena balls in sugar syrup",image:"rasgulla.jpg",video:"https://youtu.be/example62"},
+{name:"Cheesecake",category:"Desserts",rating:"⭐ 4.9",chef:"Chef Nigella Lawson",ingredients:"Cream Cheese, Sugar, Eggs, Biscuit Base",recipe:"Bake creamy cheesecake on biscuit crust",image:"cheesecake.jpg",video:"https://youtu.be/example63"},
+{name:"Jalebi",category:"Desserts",rating:"⭐ 4.8",chef:"Chef Sanjyot Keer",ingredients:"Flour, Sugar, Ghee, Saffron",recipe:"Deep fry batter spirals and soak in syrup",image:"jalebi.jpg",video:"https://youtu.be/example64"},
+{name:"Apple Pie",category:"Desserts",rating:"⭐ 4.7",chef:"Chef Martha Stewart",ingredients:"Apples, Sugar, Cinnamon, Pie Crust",recipe:"Bake apple filling in pastry crust",image:"apple_pie.jpg",video:"https://youtu.be/example65"},
+{name:"Kheer",category:"Desserts",rating:"⭐ 4.9",chef:"Chef Rakesh Ragunath",ingredients:"Rice, Milk, Sugar, Cardamom, Nuts",recipe:"Cook rice in milk with sugar and cardamom",image:"kheer.jpg",video:"https://youtu.be/example66"},
+{name:"Chocolate Lava Cake",category:"Desserts",rating:"⭐ 4.8",chef:"Chef Gordon Ramsay",ingredients:"Chocolate, Butter, Eggs, Sugar, Flour",recipe:"Bake chocolate cake with molten center",image:"chocolate_lava_cake.jpg",video:"https://youtu.be/example67"},
+{name:"Rasmalai",category:"Desserts",rating:"⭐ 4.7",chef:"Chef Sanjyot Keer",ingredients:"Paneer, Milk, Sugar, Cardamom",recipe:"Soft paneer balls in sweetened milk",image:"rasmalai.jpg",video:"https://youtu.be/example68"},
+{name:"Tiramisu",category:"Desserts",rating:"⭐ 4.9",chef:"Chef Massimo Bottura",ingredients:"Mascarpone, Coffee, Ladyfingers, Cocoa",recipe:"Layer coffee-soaked ladyfingers with mascarpone",image:"tiramisu.jpg",video:"https://youtu.be/example69"},
+{name:"Besan Ladoo",category:"Desserts",rating:"⭐ 4.8",chef:"Chef Sanjyot Keer",ingredients:"Gram Flour, Ghee, Sugar, Cardamom",recipe:"Roast gram flour, mix with sugar, shape balls",image:"besan_ladoo.jpg",video:"https://youtu.be/example70"},
+{name:"Panna Cotta",category:"Desserts",rating:"⭐ 4.7",chef:"Chef Nigella Lawson",ingredients:"Cream, Sugar, Gelatin, Vanilla",recipe:"Set sweetened cream with gelatin",image:"panna_cotta.jpg",video:"https://youtu.be/example71"},
+{name:"Mysore Pak",category:"Desserts",rating:"⭐ 4.9",chef:"Chef Rakesh Ragunath",ingredients:"Gram Flour, Ghee, Sugar",recipe:"Cook gram flour and ghee until solid, cut into pieces",image:"mysore_pak.jpg",video:"https://youtu.be/example72"},
+{name:"Chocolate Chip Cookies",category:"Desserts",rating:"⭐ 4.8",chef:"Chef Martha Stewart",ingredients:"Flour, Butter, Sugar, Eggs, Chocolate Chips",recipe:"Bake cookie dough with chocolate chips",image:"choc_chip_cookies.jpg",video:"https://youtu.be/example73"},
+{name:"Sandesh",category:"Desserts",rating:"⭐ 4.7",chef:"Chef Sanjyot Keer",ingredients:"Paneer, Sugar, Cardamom",recipe:"Mix paneer with sugar, shape into pieces",image:"sandesh.jpg",video:"https://youtu.be/example74"},
+{name:"Creme Brulee",category:"Desserts",rating:"⭐ 4.9",chef:"Chef Gordon Ramsay",ingredients:"Cream, Sugar, Egg Yolks, Vanilla",recipe:"Bake custard and torch sugar on top",image:"creme_brulee.jpg",video:"https://youtu.be/example75"},
+{name:"Kulfi",category:"Desserts",rating:"⭐ 4.8",chef:"Chef Sanjyot Keer",ingredients:"Milk, Sugar, Cardamom, Pistachios",recipe:"Freeze thickened milk mixture in molds",image:"kulfi.jpg",video:"https://youtu.be/example76"},
+{name:"Brown Butter Cake",category:"Desserts",rating:"⭐ 4.7",chef:"Chef Nigella Lawson",ingredients:"Flour, Butter, Sugar, Eggs",recipe:"Bake cake with nutty brown butter flavor",image:"brown_butter_cake.jpg",video:"https://youtu.be/example77"},
+{name:"Modak",category:"Desserts",rating:"⭐ 4.9",chef:"Chef Sanjyot Keer",ingredients:"Rice Flour, Jaggery, Coconut",recipe:"Steam rice flour dumplings filled with coconut-jaggery",image:"modak.jpg",video:"https://youtu.be/example78"},
+{name:"Banoffee Pie",category:"Desserts",rating:"⭐ 4.8",chef:"Chef Nigella Lawson",ingredients:"Banana, Toffee, Biscuit Base, Cream",recipe:"Layer bananas and toffee on biscuit crust with cream",image:"banoffee_pie.jpg",video:"https://youtu.be/example79"},
+
+];
+
+function renderList(list){
+  const menu=document.getElementById('menuArea');
+  menu.innerHTML="";
+  const categories=[...new Set(list.map(d=>d.category))];
+  categories.forEach(cat=>{
+    const section = document.createElement('div');
+    section.className = 'category-section ' + cat.toLowerCase();
+
+    section.innerHTML=`<h2>${cat}</h2><div class="menu-container" id="container-${cat}"></div>`;
+    menu.appendChild(section);
+
+    const container=document.getElementById(`container-${cat}`);
+    list.filter(d=>d.category===cat).forEach((dish,idx)=>{
+      const div=document.createElement('div');
+      div.className='dish-card';
+      div.innerHTML=`
+        <img src="${dish.image}" alt="${dish.name}">
+        <h3>${dish.name}</h3>
+        <div class="rating">${dish.rating}</div>
+        <div class="details" id="details-${cat}-${idx}">
+          <p><strong>Chef:</strong> ${dish.chef}</p>
+          <p><strong>Ingredients:</strong> ${dish.ingredients}</p>
+          <p><strong>Recipe:</strong> ${dish.recipe}</p>
+          <p><a href="${dish.video}" target="_blank">Watch Video</a></p>
+        </div>
+      `;
+      div.addEventListener('click', ()=>{
+        const details=div.querySelector('.details');
+        details.style.display=details.style.display==='block'?'none':'block';
+      });
+      container.appendChild(div);
+    });
+  });
+}
+
+function filterCategory(cat){
+  renderList(dishes.filter(d=>d.category===cat));
+}
+function showAll(){ renderList(dishes); }
+function filterList(){
+  const q=document.getElementById('search').value.toLowerCase().trim();
+  renderList(dishes.filter(d=>d.name.toLowerCase().includes(q)||d.chef.toLowerCase().includes(q)||d.ingredients.toLowerCase().includes(q)));
+}
+
+window.onload=()=>{ renderList(dishes); }
+</script>
+</body>
+</html>
